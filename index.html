@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="th">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แอปผ่อนบ้าน</title>
+  <link rel="icon" type="image/jpeg" href="https://img5.pic.in.th/file/secure-sv1/540012891_. 3_. 012_n.jpg">
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* Theme Variables */
+        .theme-gray-light {
+            --primary-color: #6b7280;
+            --secondary-color: #4b5563;
+            --accent-color: #9ca3af;
+            --bg-color: #f3f4f6;
+            --text-color: #374151;
+            --card-bg: #ffffff;
+            --shadow: rgba(107, 114, 128, 0.1);
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        .theme-gray-dark {
+            --primary-color: #3b4e54;
+            --secondary-color: #2d3e44;
+            --accent-color: #4a5d64;
+            --bg-color: #f1f3f4;
+            --text-color: #2d3e44;
+            --card-bg: #ffffff;
+            --shadow: rgba(59, 78, 84, 0.1);
+            background: linear-gradient(135deg, #3b4e54 0%, #2d3e44 100%);
+        }
+
+        .theme-purple {
+            --primary-color: #9351ce;
+            --secondary-color: #7c3aed;
+            --accent-color: #a78bfa;
+            --bg-color: #faf5ff;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --shadow: rgba(147, 81, 206, 0.1);
+            background: linear-gradient(135deg, #9351ce 0%, #7c3aed 100%);
+        }
+
+        .theme-blue {
+            --primary-color: #6dcff2;
+            --secondary-color: #0ea5e9;
+            --accent-color: #7dd3fc;
+            --bg-color: #f0f9ff;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --shadow: rgba(109, 207, 242, 0.1);
+            background: linear-gradient(135deg, #6dcff2 0%, #0ea5e9 100%);
+        }
+
+        .theme-pink {
+            --primary-color: #ec4899;
+            --secondary-color: #db2777;
+            --accent-color: #f472b6;
+            --bg-color: #fdf2f8;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --shadow: rgba(236, 72, 153, 0.1);
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 16px;
+            min-height: 100vh;
+        }
+
+        .amount-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .theme-selector {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-selector:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .main-content {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .total-amount {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .total-amount h2 {
+            margin: 0 0 5px 0;
+            font-size: 1.5rem;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .amount-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 5px 0;
+            color: #10b981;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 6px;
+            transition: width 0.8s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 180px;
+            justify-content: center;
+            color: white;
+        }
+
+        .btn-payment {
+            background: #f97316;
+        }
+
+        .btn-history {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 95%;
+            max-width: 400px;
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 25px 20px;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 25px 15px;
+            border: 2px dashed #d1d5db;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary-color);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .datetime-display {
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e1e5e9;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .modal-footer {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-confirm {
+            background: var(--primary-color);
+            color: white;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .history-item {
+            background: var(--bg-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .history-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .history-item p {
+            margin: 5px 0;
+            color: var(--text-color);
+        }
+
+        .btn-slip {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .btn-slip:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Theme Selector Modal */
+        .theme-options {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 100;
+        }
+
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+            border-color: var(--primary-color);
+        }
+
+        .theme-gray-light-option { background: #6b7280; }
+        .theme-gray-dark-option { background: #3b4e54; }
+        .theme-purple-option { background: #9351ce; }
+        .theme-blue-option { background: #6dcff2; }
+        .theme-pink-option { background: #ec4899; }
+
+
+
+        /* Floating History Panel */
+        .floating-history {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            max-width: calc(100vw - 40px);
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 500;
+            overflow: hidden;
+            display: none;
+        }
+
+        .history-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .history-header:hover {
+            background: var(--secondary-color);
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .history-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--card-bg);
+        }
+
+        .history-panel.expanded {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .floating-history-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e1e5e9;
+            color: var(--text-color);
+        }
+
+        .floating-history-item:last-child {
+            border-bottom: none;
+        }
+
+        .floating-history-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .floating-history-item p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .btn-slip-small {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-slip-small:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        /* History Section */
+        .history-section {
+            margin-top: 32px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .history-section-title {
+            color: #000000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .history-section-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 12px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .history-section-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .history-section-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .history-section-item p {
+            margin: 6px 0;
+            color: var(--text-color);
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .history-section-item .amount-text {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #10b981;
+            display: block;
+            margin: 8px 0;
+        }
+
+        .history-section-item .date-text {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .amount-display {
+                font-size: 2.8rem;
+                margin: 15px 0;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 30px;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: none;
+                padding: 22px;
+                font-size: 1.3rem;
+                border-radius: 20px;
+                font-weight: 600;
+            }
+            
+            .modal-content {
+                margin: 3% auto;
+                width: 96%;
+                max-width: 400px;
+                border-radius: 25px;
+            }
+            
+            .modal-body {
+                padding: 25px 20px;
+            }
+
+            .history-section {
+                margin-top: 30px;
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .history-section-title {
+                font-size: 1.4rem;
+                margin-bottom: 25px;
+                font-weight: 700;
+            }
+
+            .history-section-item {
+                padding: 20px;
+                margin-bottom: 15px;
+                border-radius: 20px;
+            }
+
+            .total-amount {
+                padding: 35px 25px;
+                border-radius: 20px;
+                margin-bottom: 30px;
+            }
+
+            .total-amount h2 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .amount-header {
+                margin-bottom: 30px;
+            }
+
+            .theme-selector {
+                width: 45px;
+                height: 45px;
+            }
+
+            .form-control {
+                padding: 20px 18px;
+                font-size: 1.2rem;
+                border-radius: 20px;
+            }
+
+            .file-upload-label {
+                padding: 35px 25px;
+                font-size: 1.1rem;
+                border-radius: 20px;
+            }
+
+            .btn-confirm {
+                padding: 22px;
+                font-size: 1.3rem;
+                border-radius: 20px;
+                font-weight: 600;
+            }
+
+            .btn-cancel {
+                padding: 20px;
+                font-size: 1.2rem;
+                border-radius: 20px;
+            }
+
+            .history-section-item .amount-text {
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+
+            .history-section-item .date-text {
+                font-size: 1rem;
+                margin-top: 8px;
+            }
+
+            .btn-slip {
+                padding: 12px 20px;
+                font-size: 1rem;
+                border-radius: 20px;
+                margin-top: 15px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body class="theme-gray-light">
+  <div class="container">
+   <div class="main-content">
+    <div class="total-amount">
+     <div class="amount-header">
+      <h2>จ่ายแล้ว</h2>
+      <div style="position: relative;">
+       <div class="theme-selector" onclick="toggleThemeOptions()">
+        🎨
+       </div>
+       <div class="theme-options" id="themeOptions">
+        <div class="theme-option theme-gray-light-option" onclick="changeTheme('gray-light')" title="ธีมสีเทาอ่อน"></div>
+        <div class="theme-option theme-gray-dark-option" onclick="changeTheme('gray-dark')" title="ธีมสีเทาเข้ม"></div>
+        <div class="theme-option theme-purple-option" onclick="changeTheme('purple')" title="ธีมสีม่วง"></div>
+        <div class="theme-option theme-blue-option" onclick="changeTheme('blue')" title="ธีมสีฟ้า"></div>
+        <div class="theme-option theme-pink-option" onclick="changeTheme('pink')" title="ธีมสีชมพู"></div>
+       </div>
+      </div>
+     </div>
+     <div class="amount-display"><span id="totalAmount">0</span> <span>บาท</span>
+     </div><!-- Progress Bar -->
+     <div class="progress-container">
+      <div class="progress-bar">
+       <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text"><span id="progressPercent">0%</span> <span>จาก 100,000 บาท</span>
+      </div>
+     </div>
+     <div id="loadingTotal" class="loading">
+      <div class="spinner"></div>
+      <p>กำลังโหลดข้อมูล...</p>
+     </div>
+    </div>
+    <div class="button-group"><button class="btn btn-payment" onclick="openPaymentModal()"> 💳 <span id="payment-btn-text">แจ้งชำระเงิน</span> </button>
+    </div>
+   </div><!-- History Section -->
+   <div class="history-section">
+    <h3 class="history-section-title">ประวัติการจ่ายเงิน</h3>
+    <div id="loadingHistorySection" class="loading">
+     <div class="spinner"></div>
+     <p>กำลังโหลดข้อมูล...</p>
+    </div>
+    <div id="historySectionContent"></div>
+    <div id="historySectionMessage"></div>
+   </div>
+  </div><!-- History Modal -->
+  <div id="historyModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h2>📊 ประวัติการชำระเงิน</h2>
+    </div>
+    <div class="modal-body">
+     <div id="loadingHistory" class="loading">
+      <div class="spinner"></div>
+      <p>กำลังโหลดข้อมูล...</p>
+     </div>
+     <div id="historyContent"></div>
+     <div id="historyMessage"></div>
+    </div>
+    <div class="modal-footer"><button type="button" class="btn btn-cancel" onclick="closeHistoryModal()">ปิด</button>
+    </div>
+   </div>
+  </div><!-- Payment Modal -->
+  <div id="paymentModal" class="modal">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h2>แจ้งชำระเงิน</h2>
+    </div>
+    <div class="modal-body">
+     <form id="paymentForm">
+      <div class="form-group"><label for="paymentSlip">อัปโหลดสลิปโอนเงิน</label>
+       <div class="file-upload"><input type="file" id="paymentSlip" accept="image/*" onchange="previewImage(this)"> <label for="paymentSlip" class="file-upload-label"> 📷 คลิกเพื่อเลือกไฟล์รูปภาพ </label>
+       </div>
+       <div id="imagePreview" class="image-preview"></div>
+      </div>
+      <div class="form-group"><label for="paymentAmount">จำนวนเงินที่ชำระแล้ว (บาท)</label> <input type="number" id="paymentAmount" class="form-control" placeholder="กรอกจำนวนเงิน" required>
+      </div>
+      <div class="form-group"><label>วันที่และเวลา</label>
+       <div id="currentDateTime" class="datetime-display"></div>
+      </div>
+     </form>
+     <div id="loadingPayment" class="loading">
+      <div class="spinner"></div>
+      <p>กำลังบันทึกข้อมูล...</p>
+     </div>
+     <div id="paymentMessage"></div>
+    </div>
+    <div class="modal-footer"><button type="button" class="btn btn-confirm" onclick="confirmPayment()">✅ ยืนยันการชำระเงิน</button> <button type="button" class="btn btn-cancel" onclick="closePaymentModal()">❌ ยกเลิก</button>
+    </div>
+   </div>
+  </div>
+  <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgN5HcIoiSyy23Lt0WoGCMa3Hz4qjiYLHSb0is5BMiN7jbk0O9J6BKeOUlnswhydoxQw/exec';
+        
+        let selectedFile = null;
+        let currentDateTime = '';
+        let currentTheme = 'green';
+        let currentPage = 0;
+        const itemsPerPage = 12;
+
+        // Default configuration
+        const defaultConfig = {
+            app_title: 'แอปผ่อนบ้าน',
+            payment_button_text: 'แจ้งชำระเงิน',
+            history_button_text: 'ประวัติการชำระเงิน'
+        };
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig: defaultConfig,
+                onConfigChange: async (config) => {
+                    document.getElementById('payment-btn-text').textContent = config.payment_button_text || defaultConfig.payment_button_text;
+                    document.getElementById('history-btn-text').textContent = config.history_button_text || defaultConfig.history_button_text;
+                },
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ['app_title', config.app_title || defaultConfig.app_title],
+                    ['payment_button_text', config.payment_button_text || defaultConfig.payment_button_text],
+                    ['history_button_text', config.history_button_text || defaultConfig.history_button_text]
+                ])
+            });
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            changeTheme('gray-light'); // เริ่มต้นด้วยธีมสีเทาอ่อน
+            loadTotalAmount();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            loadHistorySection(); // โหลดประวัติด้านล่าง
+        });
+
+        function changeTheme(theme) {
+            currentTheme = theme;
+            document.body.className = `theme-${theme}`;
+            document.getElementById('themeOptions').style.display = 'none';
+        }
+
+        function toggleThemeOptions() {
+            const options = document.getElementById('themeOptions');
+            options.style.display = options.style.display === 'block' ? 'none' : 'block';
+        }
+
+
+
+        async function loadTotalAmount() {
+            const loadingDiv = document.getElementById('loadingTotal');
+            const totalElement = document.getElementById('totalAmount');
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            
+            loadingDiv.style.display = 'block';
+            
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getPayments`);
+                const result = await response.json();
+                
+                loadingDiv.style.display = 'none';
+                
+                if (result.success && result.data) {
+                    const total = result.data.reduce((sum, payment) => {
+                        return sum + (parseFloat(payment.amount) || 0);
+                    }, 0);
+                    
+                    totalElement.textContent = total.toLocaleString('th-TH');
+                    
+                    // Update progress bar
+                    const maxAmount = 100000; // 100,000 บาท
+                    const percentage = Math.min((total / maxAmount) * 100, 100);
+                    
+                    setTimeout(() => {
+                        progressFill.style.width = `${percentage}%`;
+                        progressPercent.textContent = `${percentage.toFixed(1)}%`;
+                    }, 300);
+                } else {
+                    totalElement.textContent = '0';
+                    progressFill.style.width = '0%';
+                    progressPercent.textContent = '0%';
+                }
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                totalElement.textContent = '0';
+                progressFill.style.width = '0%';
+                progressPercent.textContent = '0%';
+                console.error('Error loading total amount:', error);
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Thai days of week
+            const thaiDays = [
+                'วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'
+            ];
+            
+            // Thai months
+            const thaiMonths = [
+                'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+            ];
+            
+            const dayOfWeek = thaiDays[now.getDay()];
+            const day = now.getDate();
+            const month = thaiMonths[now.getMonth()];
+            const year = now.getFullYear() + 543; // Convert to Buddhist Era
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            
+            currentDateTime = `${dayOfWeek} ที่ ${day} ${month} ${year} เวลา ${hours}:${minutes} น.`;
+            
+            const datetimeElement = document.getElementById('currentDateTime');
+            if (datetimeElement) {
+                datetimeElement.textContent = currentDateTime;
+            }
+        }
+
+        function openPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'block';
+            updateDateTime();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            resetPaymentForm();
+        }
+
+        function openHistoryModal() {
+            document.getElementById('historyModal').style.display = 'block';
+            loadPaymentHistory();
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').style.display = 'none';
+        }
+
+
+
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const file = input.files[0];
+            
+            if (file) {
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="ตัวอย่างรูปภาพ">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+                selectedFile = null;
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    const base64 = reader.result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function confirmPayment() {
+            const amount = document.getElementById('paymentAmount').value;
+            const messageDiv = document.getElementById('paymentMessage');
+            
+            if (!selectedFile) {
+                messageDiv.innerHTML = '<div class="error-message">กรุณาเลือกไฟล์รูปภาพสลิปโอนเงิน</div>';
+                return;
+            }
+            
+            if (!amount) {
+                messageDiv.innerHTML = '<div class="error-message">กรุณากรอกจำนวนเงินที่ชำระแล้ว</div>';
+                return;
+            }
+
+            try {
+                document.getElementById('loadingPayment').style.display = 'block';
+                messageDiv.innerHTML = '';
+
+                const base64Data = await fileToBase64(selectedFile);
+                
+                const formData = new URLSearchParams();
+                formData.append('action', 'addPayment');
+                formData.append('amount', amount);
+                formData.append('datetime', currentDateTime);
+                formData.append('fileData', base64Data);
+                formData.append('fileName', selectedFile.name);
+                formData.append('mimeType', selectedFile.type);
+
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                document.getElementById('loadingPayment').style.display = 'none';
+
+                if (result.success) {
+                    messageDiv.innerHTML = '<div class="success-message">✅ บันทึกข้อมูลการชำระเงินเรียบร้อยแล้ว!</div>';
+                    setTimeout(() => {
+                        closePaymentModal();
+                        loadTotalAmount(); // Refresh total amount
+                        currentPage = 0; // Reset to first page
+                        loadHistorySection(0); // Refresh history section immediately
+                    }, 2000);
+                } else {
+                    messageDiv.innerHTML = `<div class="error-message">❌ เกิดข้อผิดพลาด: ${result.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('loadingPayment').style.display = 'none';
+                messageDiv.innerHTML = `<div class="error-message">❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}</div>`;
+            }
+        }
+
+        async function loadPaymentHistory() {
+            const loadingDiv = document.getElementById('loadingHistory');
+            const contentDiv = document.getElementById('historyContent');
+            const messageDiv = document.getElementById('historyMessage');
+            
+            loadingDiv.style.display = 'block';
+            contentDiv.innerHTML = '';
+            messageDiv.innerHTML = '';
+
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getPayments`);
+                const result = await response.json();
+                
+                loadingDiv.style.display = 'none';
+
+                if (result.success && result.data && result.data.length > 0) {
+                    let historyHTML = '';
+                    // เรียงข้อมูลจากใหม่ไปเก่า (reverse order)
+                    const reversedData = [...result.data].reverse();
+                    reversedData.forEach((payment, index) => {
+                        // Format Thai date
+                        const thaiDate = formatThaiDateTime(payment.datetime);
+                        
+                        historyHTML += `
+                            <div class="history-item">
+                                <h4>การชำระเงินครั้งที่ ${result.data.length - index}</h4>
+                                <p><strong>จำนวนเงิน:</strong> ${parseFloat(payment.amount).toLocaleString('th-TH')} บาท</p>
+                                <p><strong>วันที่และเวลา:</strong> ${thaiDate}</p>
+                                ${payment.url ? `<button class="btn-slip" onclick="window.open('${payment.url}', '_blank', 'noopener,noreferrer')">🧾 สลิปโอนเงิน</button>` : ''}
+                            </div>
+                        `;
+                    });
+                    contentDiv.innerHTML = historyHTML;
+                } else {
+                    contentDiv.innerHTML = '<div class="history-item"><p>ยังไม่มีประวัติการชำระเงิน</p></div>';
+                }
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                messageDiv.innerHTML = `<div class="error-message">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: ${error.message}</div>`;
+            }
+        }
+
+        function formatThaiDateTime(dateTimeString) {
+            try {
+                // If it's already in Thai format, return as is
+                if (dateTimeString.includes('วัน') && dateTimeString.includes('เวลา')) {
+                    return dateTimeString;
+                }
+                
+                // Parse the date string
+                const date = new Date(dateTimeString);
+                
+                // Thai days of week
+                const thaiDays = [
+                    'วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'
+                ];
+                
+                // Thai months
+                const thaiMonths = [
+                    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+                ];
+                
+                const dayOfWeek = thaiDays[date.getDay()];
+                const day = date.getDate();
+                const month = thaiMonths[date.getMonth()];
+                const year = date.getFullYear() + 543; // Convert to Buddhist Era
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                
+                return `${dayOfWeek} ที่ ${day} ${month} ${year} เวลา ${hours}:${minutes} น.`;
+            } catch (error) {
+                return dateTimeString; // Return original if parsing fails
+            }
+        }
+
+        async function loadHistorySection(page = 0) {
+            const loadingDiv = document.getElementById('loadingHistorySection');
+            const contentDiv = document.getElementById('historySectionContent');
+            const messageDiv = document.getElementById('historySectionMessage');
+            
+            loadingDiv.style.display = 'block';
+            contentDiv.innerHTML = '';
+            messageDiv.innerHTML = '';
+
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?action=getPayments`);
+                const result = await response.json();
+                
+                loadingDiv.style.display = 'none';
+
+                if (result.success && result.data && result.data.length > 0) {
+                    // เรียงข้อมูลจากใหม่ไปเก่า (reverse order) - ข้อมูลล่าสุดจะอยู่ด้านบนเสมอ
+                    const sortedData = [...result.data].sort((a, b) => {
+                        // เรียงตาม timestamp หรือ datetime จากใหม่ไปเก่า
+                        const dateA = new Date(a.datetime || a.timestamp);
+                        const dateB = new Date(b.datetime || b.timestamp);
+                        return dateB - dateA; // เรียงจากใหม่ไปเก่า
+                    });
+                    
+                    const totalItems = sortedData.length;
+                    const startIndex = page * itemsPerPage;
+                    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+                    const pageData = sortedData.slice(startIndex, endIndex);
+                    
+                    let historyHTML = '';
+                    pageData.forEach((payment, index) => {
+                        // Format Thai date
+                        const thaiDate = formatThaiDateTime(payment.datetime);
+                        
+                        historyHTML += `
+                            <div class="history-section-item">
+                                <p><span class="amount-text">${parseFloat(payment.amount).toLocaleString('th-TH')} บาท</span></p>
+                                <p class="date-text">${thaiDate}</p>
+                                ${payment.url ? `<button class="btn-slip" onclick="window.open('${payment.url}', '_blank', 'noopener,noreferrer')">🧾 ดูสลิป</button>` : ''}
+                            </div>
+                        `;
+                    });
+                    
+                    // Add pagination controls
+                    const totalPages = Math.ceil(totalItems / itemsPerPage);
+                    if (totalPages > 1) {
+                        historyHTML += `
+                            <div style="text-align: center; margin-top: 20px; padding: 20px;">
+                                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                    ${page > 0 ? `<button class="btn-slip" onclick="loadHistorySection(${page - 1}); currentPage = ${page - 1};">← ก่อนหน้า</button>` : ''}
+                                    <span style="color: var(--text-color); font-weight: 500;">หน้า ${page + 1} จาก ${totalPages}</span>
+                                    ${page < totalPages - 1 ? `<button class="btn-slip" onclick="loadHistorySection(${page + 1}); currentPage = ${page + 1};">ถัดไป →</button>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    contentDiv.innerHTML = historyHTML;
+                } else {
+                    contentDiv.innerHTML = '<div class="history-section-item"><p>ยังไม่มีประวัติการชำระเงิน</p></div>';
+                }
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                messageDiv.innerHTML = `<div class="error-message">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: ${error.message}</div>`;
+            }
+        }
+
+        function resetPaymentForm() {
+            document.getElementById('paymentForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('paymentMessage').innerHTML = '';
+            document.getElementById('loadingPayment').style.display = 'none';
+            selectedFile = null;
+        }
+
+        // Close modals and options when clicking outside
+        window.onclick = function(event) {
+            const paymentModal = document.getElementById('paymentModal');
+            const themeOptions = document.getElementById('themeOptions');
+            const floatingHistory = document.getElementById('floatingHistory');
+            
+            if (event.target === paymentModal) {
+                closePaymentModal();
+            }
+            if (!event.target.closest('.theme-selector')) {
+                themeOptions.style.display = 'none';
+            }
+            if (!event.target.closest('.floating-history') && !floatingHistory.contains(event.target)) {
+                // Optional: Close floating history when clicking outside
+            }
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9969677096fa5f65',t:'MTc2MTgxMTQ4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
